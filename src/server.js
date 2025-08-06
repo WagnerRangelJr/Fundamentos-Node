@@ -1,24 +1,28 @@
 import http from 'node:http'
+import { json } from './middleware/json.js'
 
 const users = []
-const server = http.createServer((req, res) => {
-
+const server = http.createServer(async (req, res) => {
     const {method, url} = req
-    console.log(req.headers)
+    console.log(res)
+    //console.log(res)
+    await json(req, res)
+    console.log("_____________________________")
+    console.log(res)
+    //console.log(res)
 
     if (method == 'GET' && url == '/users'){
         return res
-        .setHeader('Content-type','application/json')
         .end( JSON.stringify(users))    
     }
 
     if (method == 'POST' && url == '/users'){
-
+        const { name, email, role} = req.body
         users.push({
             id: 1,
-            name:"Jonh Doe",
-            email:"jonhdoe@email.com",
-            role:"developer",
+            name,
+            email,
+            role,
         })
         return res.writeHead(201).end()
     }
