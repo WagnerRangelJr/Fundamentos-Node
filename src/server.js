@@ -4,12 +4,10 @@ import { json } from './middleware/json.js'
 const users = []
 const server = http.createServer(async (req, res) => {
     const {method, url} = req
-    console.log(res)
-    //console.log(res)
+
+    // middleware que intercepta a requisicao para fazer alteracao 
     await json(req, res)
-    console.log("_____________________________")
-    console.log(res)
-    //console.log(res)
+
 
     if (method == 'GET' && url == '/users'){
         return res
